@@ -13,15 +13,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Main author: Luke Hilliard
+ * Other contributors: ...
+ *
+ */
 public class App {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         boolean exit = false;
-        /**
-         * Main author: Luke Hilliard
-         * Other contributors: ...
-         *
-         */
+
         try{
             do{
                 int choice = 0;
