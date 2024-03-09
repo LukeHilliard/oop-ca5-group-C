@@ -41,7 +41,7 @@ public class App {
                         findEmployeeByID(IEmployeeDao);
                         break;
                     case 3:
-                        // TODO implement delete entity
+                        deleteEmployeeByID(IEmployeeDao);
                         break;
                     case 4:
                         displayAddEmployee(IEmployeeDao);
@@ -133,6 +133,31 @@ public class App {
         }
     }
 
+    /**
+     *  Author: Katie Lynch
+     *
+     *  Deleting an Employee from the database
+     */
+    private static void deleteEmployeeByID(EmployeeDaoInterface dao){
+        try{
+            Scanner kbrd = new Scanner(System.in);
+            int id;
+            System.out.println("Enter ID of Employee to be deleted: ");
+            id = kbrd.nextInt();
+
+            //checks that ID entered is above 0 as ID cannot be 0 or anything less
+            if (id <= 0) {
+                System.out.println("The Employee ID you want to delete must be above 0");
+            } else {
+                System.out.println("Deleting Employee with ID: " + id);
+                //checks for employee ID in database and deletes it if it is there
+                dao.deleteEmployee(id);
+            }
+
+        }catch (DaoException ex){
+            System.out.println("** Error deleting employee **" + ex.getMessage());
+        }
+    }
 
     /**
      *  Author: Luke Hilliard
