@@ -212,7 +212,7 @@ public class MySqlEmployeeDao extends MySqlDao implements EmployeeDaoInterface {
                 String username = resultSet.getString("username");
                 String password = resultSet.getString("password");
 
-                new Employee(employeeId, firstName, lastName, gender, dob, salary, role, username, password);
+                employee = new Employee(employeeId, firstName, lastName, gender, dob, salary, role, username, password);
             }
         } catch (SQLException e)
         {
