@@ -9,7 +9,7 @@ import java.time.LocalDate;
  *
  */
 
-public class Employee {
+public class Employee implements Comparable<Employee> {
     private int id;
     private String firstName;
     private String lastName;
@@ -131,5 +131,14 @@ public class Employee {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Employee o) {
+        if(id < o.id)
+            return -1;
+        else if (id > o.id)
+            return 1;
+        return  0;
     }
 }
