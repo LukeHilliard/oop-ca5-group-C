@@ -47,7 +47,7 @@ public class App {
                         displayAddEmployee(IEmployeeDao);
                         break;
                     case 5:
-                        // TODO implement update existing by id
+                        displayUpdateEmployeeByID(IEmployeeDao);
                         break;
                     case 6:
                         // TODO implement get list matching filters
@@ -62,12 +62,17 @@ public class App {
     }
     /**
      *  Author: Luke Hilliard
-     *
+     *  Other contributors: Katie Lynch
      *  Displays the main menu (Default)
      */
     private static void displayMainMenu() {
         System.out.println("------* Employee Database ------*");
-        System.out.println("\t.1 Display Entity by ID\n\t.2 Display all Entities\n\t.3 Delete Entity by ID\n\t.4 Add an Entity\n\t.5 Get Images List\n\t.-1 Exit");
+        System.out.println("0. Exit" +
+                "\n1. Display all Entities" +
+                "\n2. Display Entity by ID" +
+                "\n3. Delete Entity by ID" +
+                "\n4. Add a Entity" +
+                "\n5. Update a Entity by ID");
     }
 
 
@@ -157,6 +162,14 @@ public class App {
         }catch (DaoException ex){
             System.out.println("** Error deleting employee **" + ex.getMessage());
         }
+    }
+
+    /**
+     *  Author: Katie Lynch
+     *  Displays the menu for updating an existing Character
+     */
+    private static void displayUpdateEmployeeByID(EmployeeDaoInterface dao){
+
     }
 
     /**
