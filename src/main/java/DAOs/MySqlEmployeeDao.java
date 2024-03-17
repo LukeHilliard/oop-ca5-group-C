@@ -83,10 +83,12 @@ public class MySqlEmployeeDao extends MySqlDao implements EmployeeDaoInterface {
         ResultSet resultSet = null;
         Employee employee = null;
 
+//        id, , , gender, dob, salary, role, username, password
+
         try{
             connection = this.getConnection();
             //creates query to get one row of data based off of the ID
-            String query = "UPDATE Characters SET firstName = ?, lastName = ?, gender = ?, dob = ?, salary = ?, role = ?, username = ?,  password = ? WHERE id =?";
+            String query = "UPDATE Employees SET  first_name = ?, last_name = ?, gender = ?, dob = ?, salary = ?, role = ?, username = ?,  password = ? WHERE id =?";
             preparedStatement = connection.prepareStatement(query);
             //updates employee information with new data
             preparedStatement.setString(1, updatedEmployee.getFirstName());
