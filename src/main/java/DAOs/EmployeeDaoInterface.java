@@ -7,6 +7,7 @@ public interface EmployeeDaoInterface {
 
     public List<Employee> getAllEmployees() throws DaoException;
     public Employee getEmployeeById(int id) throws DaoException;
+    public Employee getEmployeeByFirstnameLastname(String Firstname, String Lastname) throws DaoException;
     public void addEmployee(Employee employee) throws DaoException;
     public void deleteEmployee(int id) throws DaoException;
 }

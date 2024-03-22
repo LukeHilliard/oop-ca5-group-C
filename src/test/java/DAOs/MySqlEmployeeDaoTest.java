@@ -3,8 +3,6 @@ package DAOs;
 import DTOs.Employee;
 import Exceptions.DaoException;
 import junit.framework.TestCase;
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.time.LocalDate;
 

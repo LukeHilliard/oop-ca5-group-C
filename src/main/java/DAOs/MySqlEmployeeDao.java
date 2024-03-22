@@ -216,7 +216,7 @@ public class MySqlEmployeeDao extends MySqlDao implements EmployeeDaoInterface {
             }
         } catch (SQLException e)
         {
-            throw new DaoException("findUserByUsernamePassword() " + e.getMessage());
+            throw new DaoException("getEmployeeById() " + e.getMessage());
         } finally
         {
             try
@@ -235,7 +235,64 @@ public class MySqlEmployeeDao extends MySqlDao implements EmployeeDaoInterface {
                 }
             } catch (SQLException e)
             {
-                throw new DaoException("findUserByUsernamePassword() " + e.getMessage());
+                throw new DaoException("getEmployeeById() " + e.getMessage());
+            }
+        }
+        return employee;     // reference to User object, or null value
+    }
+    @Override
+    public Employee getEmployeeByFirstnameLastname(String Firstname, String Lastname) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Employee employee = null;
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "SELECT * FROM Employees WHERE first_name = ? AND last_name = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, Firstname);
+            preparedStatement.setString(2, Lastname);
+
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next())
+            {
+                int employeeId = resultSet.getInt("id");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String gender = resultSet.getString("gender");
+                LocalDate dob = resultSet.getDate("dob").toLocalDate();
+                double salary = resultSet.getInt("salary");
+                String role = resultSet.getString("role");
+                String username = resultSet.getString("username");
+                String password = resultSet.getString("password");
+
+                employee = new Employee(employeeId, firstName, lastName, gender, dob, salary, role, username, password);
+            }
+        } catch (SQLException e)
+        {
+            throw new DaoException("getEmployeeByFirstnameLastname() " + e.getMessage());
+        } finally
+        {
+            try
+            {
+                if (resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e)
+            {
+                throw new DaoException("getEmployeeByFirstnameLastname() " + e.getMessage());
             }
         }
         return employee;     // reference to User object, or null value
