@@ -3,6 +3,7 @@ package Objects;
 import DAOs.MySqlEmployeeDao;
 import DAOs.EmployeeDaoInterface;
 import DTOs.Employee;
+import DTOs.JsonConverter;
 import Exceptions.DaoException;
 
 import javax.swing.text.DateFormatter;
@@ -52,6 +53,9 @@ public class App {
                     case 6:
                         // TODO implement get list matching filters
                         break;
+                    case 7:
+                        displayJsonList();
+                        break;
                 }
 
             }while(!exit);
@@ -72,7 +76,8 @@ public class App {
                 "\n2. Display Entity by ID" +
                 "\n3. Delete Entity by ID" +
                 "\n4. Add a Entity" +
-                "\n5. Update a Entity by ID");
+                "\n5. Update a Entity by ID" +
+                "\n7. Convert All Employees To JSON List");
     }
 
 
@@ -279,6 +284,31 @@ public class App {
 
         }catch(DaoException ex){
             System.out.println("Encountered An Error Updating Employee: " + ex.getMessage());
+        }
+    }
+
+    /**
+     *  Author: Katie Lynch
+     *  Converts the list of employees in the database into a Json String using the JsonConverter
+     *  class created to take in individual rows of information as a string, convert them and print
+     *  them out until it reaches the end of the database.
+     */
+    public static void displayJsonList(){
+        try {
+            System.out.println("*---- Converting Employee List To Json String ----*");
+            //calls the jsonConverter class created
+            JsonConverter jsonConverter = new JsonConverter();
+            //gets each row of information and converts them individually using the converter code
+            String employeeJson = jsonConverter.jsonEmployeeList();
+            //checks to see if there is any information in the database to convert
+            if(employeeJson != null){
+                System.out.println(employeeJson);
+            }else{
+                //if there is no information a message is shown to alert the user that the database is empty
+                System.out.println("No Employee Information Was Found");
+            }
+        } catch (DaoException ex) {
+            System.out.println("Encountered An Error Converting Employee List To Json String" + ex.getMessage());
         }
     }
 
