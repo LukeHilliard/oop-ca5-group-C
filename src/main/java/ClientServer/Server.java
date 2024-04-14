@@ -129,7 +129,7 @@ class ClientHandler implements Runnable {
                         try{
                             //getting and displaying employee from database
                             Employee employee = dao.getEmployeeById(id);
-                            System.out.println(employee.toString());
+                            System.out.println(employee);
                         }catch (DaoException ex){
                             System.out.println("Encountered Error Displaying Employee: " + ex.getMessage());
                         }
