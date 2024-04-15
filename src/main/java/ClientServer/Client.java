@@ -4,6 +4,9 @@ import DAOs.EmployeeDaoInterface;
 import DAOs.MySqlEmployeeDao;
 import DTOs.Employee;
 import Exceptions.DaoException;
+import Utilities.Adaptor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,7 +40,7 @@ public class Client {
             Scanner input = new Scanner(System.in);
             Scanner submenuInput = new Scanner(System.in);
             boolean exit = false;
-
+            boolean hasSelectedById = false;
             do{
                 int option;
                 displayMainMenu();
@@ -57,11 +60,12 @@ public class Client {
                             input.next();
                         }
                         id = input.nextInt();
-                        if(id == 0){
+                        if(id == -1){
                             System.out.println("\n");
                             break;
                         }
                         request = option + "&" + id;
+                        hasSelectedById = true;
                         /**
                          * TODO - Get Character Information to Display Once Sever Has Found It
                          * */
@@ -108,6 +112,24 @@ public class Client {
                 if(!exit) {
                     out.println(request);
                 }
+
+                if(hasSelectedById) {
+                    StringBuilder responseBuilder = new StringBuilder();
+                    String jsonString;
+                    while ((jsonString = in.readLine()) != null && jsonString.charAt(jsonString.length()- 1) != '}') {
+                        responseBuilder.append(jsonString);
+                    }
+                    jsonString = responseBuilder.toString();
+                    Gson gsonParser = new GsonBuilder()
+                            .registerTypeAdapter(LocalDate.class, new Adaptor())
+                            .create();
+
+                    System.out.println(jsonString);
+                    Employee c = gsonParser.fromJson(jsonString, Employee.class);
+                    displayOneEmployee(c);
+                    System.out.println(c.toString());
+                }
+                //System.out.println(response);
             }while(!exit);
         } catch (IOException ex){
             System.out.println("Client IOException: " + ex);
@@ -130,7 +152,25 @@ public class Client {
                             """);
     }
 
+    /**
+     * Author: Luke Hilliard
+     * Other contributors: Katie Lynch
+     * Takes a list of characters as a parameter and displays them
+     *
+     * @param employee database information of one character
+     */
+    private static void displayOneEmployee(Employee employee)  {
 
+        // Display a single employee in table form
+        System.out.println("+----+--------------+--------------+--------+------------+------------+-------------------------+----------------------+----------------+");
+        System.out.println("| ID |  First Name  |  Last Name   | Gender |    DOB     |   Salary   |      Role               |    Username          | Password       |");
+        System.out.println("+----+--------------+--------------+--------+------------+------------+-------------------------+----------------------+----------------+");
+
+        System.out.printf("| %-2d | %-12s | %-12s | %-6s | %10s | $% .2f | %-23s | %-20s | %-14s |%n",
+                employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getGender(), employee.getDob(), employee.getSalary(), employee.getRole(), employee.getUsername(), employee.getPassword());
+        System.out.println("+----+--------------+--------------+--------+------------+------------+-------------------------+----------------------+----------------+\n");
+
+    }
 
 
 }

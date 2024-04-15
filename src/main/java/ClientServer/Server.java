@@ -3,6 +3,7 @@ package ClientServer;
 import DAOs.EmployeeDaoInterface;
 import DAOs.MySqlEmployeeDao;
 import DTOs.Employee;
+import DTOs.JsonConverter;
 import Exceptions.DaoException;
 
 import java.io.BufferedReader;
@@ -129,7 +130,12 @@ class ClientHandler implements Runnable {
                         try{
                             //getting and displaying employee from database
                             Employee employee = dao.getEmployeeById(id);
-                            System.out.println(employee);
+                            JsonConverter converter = new JsonConverter();
+                            String response = converter.jsonEmployeeList(id);
+                            //System.out.println(response);
+
+
+                            socketWriter.println(response);
                         }catch (DaoException ex){
                             System.out.println("Encountered Error Displaying Employee: " + ex.getMessage());
                         }
