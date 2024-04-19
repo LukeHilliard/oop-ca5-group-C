@@ -37,7 +37,7 @@ public class Client {
             Scanner input = new Scanner(System.in);
             Scanner submenuInput = new Scanner(System.in);
             boolean exit = false;
-
+            boolean hasSelectedById = false;
             do{
                 int option;
                 displayMainMenu();
@@ -73,6 +73,7 @@ public class Client {
                         }
 
                         request = option + "&" + id;
+                        hasSelectedById = true;
                         break;
                     case 3: // Add an employee
                         Scanner employeeInput = new Scanner(System.in);
@@ -97,6 +98,21 @@ public class Client {
                         password = employeeInput.nextLine();
 
                         request = option + "&" + fName + "&" + lName +"&" + gender + "&" + dateOfBirth + "&" + salary + "&" + role + "&" + username + "&" + password;
+                        break;
+                    case 4: // Delete an employee by ID
+                        int Deleteid;
+                        System.out.println("\nEnter an ID to Delete the employee (-1 to return):");
+                        while(!input.hasNextInt()) {
+                            System.out.println("** Invalid ID **\n");
+                            input.next();
+                        }
+                        Deleteid = input.nextInt();
+                        if (Deleteid == -1) {
+                            System.out.println("\n");
+                            break; // exits loop and return to main menu
+                        }
+
+                        request = option + "&" + Deleteid;
                         break;
                     case -1:
                         while(true) {

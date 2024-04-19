@@ -3,6 +3,7 @@ package ClientServer;
 import DAOs.EmployeeDaoInterface;
 import DAOs.MySqlEmployeeDao;
 import DTOs.Employee;
+import DTOs.JsonConverter;
 import Exceptions.DaoException;
 
 import java.io.BufferedReader;
@@ -15,7 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Scanner;
-
 
 /**
  * Main author: Luke Hilliard
@@ -134,10 +134,10 @@ class ClientHandler implements Runnable {
                         }
                         break;
                     case "2": // Find employee by ID
-                        //System.out.println("Client requested to find employees by ID");
+                        //System.out.println("Client Requested To Find Employee By ID");
                         /**
                          * TODO - Katie add your code here
-                         * you will have to use the parameters array, user parameters[1] to access the ID passed from client
+                         *
                          */
                         break;
                     case "3": // Add employee
@@ -157,6 +157,15 @@ class ClientHandler implements Runnable {
                             dao.addEmployee(new Employee(fName, lName, gender, dateOfBirth, salary, role, username, password));
                         } catch (DaoException e) {
                             System.out.println("** Error creating new employee. **" + e.getMessage());
+                        }
+                        break;
+                    case "4": // Delete employee (By ID)
+                        int id = Integer.parseInt(parameters[1]);
+                        try {
+                            // Deletes the employee
+                            dao.deleteEmployee(id);
+                        } catch (DaoException e) {
+                            System.out.println("** Error Deleting employee. **" + e.getMessage());
                         }
                         break;
                 }
